@@ -1,0 +1,9 @@
+server:
+  port: 8761 #fixed port for eureka
+
+eureka:
+  client:
+    register-with-eureka: false # Server khud ko register nahi karega
+    fetch-registry: false       # Server ko kisi aur se registry lene ki zaroorat nahi hai
+  instance:
+    hostname: localhost
