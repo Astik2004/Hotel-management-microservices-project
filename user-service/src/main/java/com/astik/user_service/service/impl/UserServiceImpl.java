@@ -7,6 +7,7 @@ import com.astik.user_service.exception.ResourceNotFoundException;
 import com.astik.user_service.repositories.UserRepository;
 import com.astik.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,20 +16,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
     public UserResponse createUser(UserRequest userRequest) {
+        log.info("Creating User with name {}",userRequest.getName());
         User user = toEntity(userRequest);
         User savedUser = userRepository.save(user);
+        log.info("User created successfully with id {}",savedUser.getId());
         return toResponse(savedUser);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
+        log.info("Fetching all User Details");
         return userRepository.findAll()
                 .stream()
                 .map(this::toResponse)
@@ -38,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserResponse getUserById(String id) {
+        log.info("Fetching user with id : {}",id);
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
