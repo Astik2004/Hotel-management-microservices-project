@@ -22,21 +22,21 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest userRequest) {
-        log.info("Creating user with email: {}", userRequest.getEmail());
+        log.info("Received request to create user with email: {}", userRequest.getEmail());
         UserResponse userResponse = userService.createUser(userRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
-        log.info("Fetching user with id: {}", id);
+        log.info("Received request to fetch user with id: {}", id);
         UserResponse user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
-        log.info("Fetching all users");
+        log.info("Received request to fetch all users");
         List<UserResponse> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
