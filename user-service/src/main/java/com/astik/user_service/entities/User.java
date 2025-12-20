@@ -1,6 +1,5 @@
 package com.astik.user_service.entities;
 
-import com.astik.user_service.dto.Rating;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

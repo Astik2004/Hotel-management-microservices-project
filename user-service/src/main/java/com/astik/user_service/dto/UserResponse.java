@@ -1,5 +1,6 @@
 package com.astik.user_service.dto;
 
+import com.astik.user_service.entities.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

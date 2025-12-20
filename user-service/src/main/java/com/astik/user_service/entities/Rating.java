@@ -1,4 +1,4 @@
-package com.astik.user_service.dto;
+package com.astik.user_service.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
