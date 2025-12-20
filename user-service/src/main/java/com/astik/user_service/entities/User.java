@@ -1,10 +1,13 @@
 package com.astik.user_service.entities;
 
+import com.astik.user_service.dto.Rating;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name="user_details")
@@ -23,4 +26,7 @@ public class User {
     private String email;
     @Column(name = "ABOUT")
     private String about;
+    @Transient
+    private List<Rating> rating;
+
 }
