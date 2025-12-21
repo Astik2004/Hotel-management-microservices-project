@@ -45,6 +45,20 @@ public class UserServiceImpl implements UserService {
         log.info("Fetching all User Details");
         return userRepository.findAll()
                 .stream()
+                .map(user -> {
+                    List<Rating> ratings =
+                            ratingService.getRatingsByUserId(user.getId())
+                                    .stream()
+                                    .map(this::mapToEntity)
+                                    .map(rating -> {
+                                        Hotel hotel = hotelService.getHotel(rating.getHotelId());
+                                        rating.setHotel(hotel);
+                                        return rating;
+                                    })
+                                    .toList();
+                    user.setRating(ratings);
+                    return user;
+                })
                 .map(this::toResponse)
                 .toList();
     }
@@ -59,7 +73,7 @@ public class UserServiceImpl implements UserService {
         //Rating[] ratingOfUser=restTemplate.getForObject("http://RATING-SERVICE/api/v1/ratings/users/"+id, Rating[].class);
         List<RatingResponse>ratingOfUser=ratingService.getRatingsByUserId(user.getId());
         //List<Rating>ratings= Arrays.stream(ratingOfUser).toList();
-        List<Rating>ratings=ratingOfUser.stream().map(this::mapToResponse).map(rating->{
+        List<Rating>ratings=ratingOfUser.stream().map(this::mapToEntity).map(rating->{
             Hotel hotel=hotelService.getHotel(rating.getHotelId());
             rating.setHotel(hotel);
             return rating;
@@ -96,7 +110,7 @@ public class UserServiceImpl implements UserService {
                 .rating(user.getRating())
                 .build();
     }
-    private Rating mapToResponse(RatingResponse response) {
+    private Rating mapToEntity(RatingResponse response) {
         return Rating.builder()
                 .ratingId(response.getRatingId())
                 .userId(response.getUserId())
