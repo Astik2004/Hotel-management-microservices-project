@@ -18,11 +18,13 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
   application:
-    name: USER-SERVICE # Yeh naam Eureka Registry mein dikhega
+    name: USER-SERVICE
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
+    fetch-registry: true
+    register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
